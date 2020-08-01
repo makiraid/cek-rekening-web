@@ -8,31 +8,16 @@ import {
   ButtonToolbar,
   Button,
   Alert,
-  List,
   Grid,
-  Row,
-  Col,
   Loader,
-  Input,
-  IconButton,
-  Icon,
-  Tag,
-  TagGroup,
-  HelpBlock,
   InputPicker, 
-  DateRangePicker,
   Panel
 } from 'rsuite';
 import './App.css';
 import axios from 'axios';
-import ReactGA from 'react-ga';
-
 import data from './bank.json';
 
-const baseUrlApi = 'https://quotes-api.archv.id';
-
-ReactGA.initialize('UA-166645923-2');
-
+const baseUrlApi = 'https://api.makira.id';
 
 class App extends React.Component {
   constructor(props) {
@@ -45,41 +30,27 @@ class App extends React.Component {
     };
   }
 
-  trackPageView(page, options = {}){
-    ReactGA.set({
-      page,
-      ...options
-    });
-    ReactGA.pageview(page);
-  }
-
   async handleSubmit() {
     const { kodeBank, nomorRekening } = this.state;
     this.setState({
       isLoading: true
     })
-    await axios.get(`https://api.makira.id/cek-norek?kodeBank=${kodeBank}&noRek=${nomorRekening}`)
+    await axios.get(`${baseUrlApi}/cek-norek?kodeBank=${kodeBank}&noRek=${nomorRekening}`)
     .then((response) => {
       if (response.data.code == 200) {
-        Alert.success(response)
         this.setState({
-          response: response.data
+          response: response.data.data.data.name
         })
       } else if (response.data.code == 201) {
-        Alert.success(response)
-        this.setState({
-          response: response.data
-        })
+        Alert.warning("Oops, Terjadi kesalahan periksa kembali")
       }
       this.setState({
         isLoading: false
       })
     })
     .catch((error) => {
-      Alert.warning(error)
-      this.setState({
-        isLoading: false
-      })
+      console.log(error)
+        Alert.warning("Oops, Terjadi kesalahan periksa kembali")
     })
     this.setState({
       isLoading: false
@@ -131,29 +102,26 @@ class App extends React.Component {
             </Form>
           </Grid>
           <div className="listLatestQuotes2">
-            <Form>
-              <FormGroup>
-                <Panel 
-                  className="listLatestQuotes2"
-                  header="Result" 
-                  shaded
-                  style={{ width: 500 }}
-                >
-                  {/* {this.state.} */}
-                </Panel>
-              </FormGroup>
-            </Form>
-          </div>
-        </div>
-        {/* <div>
-            {this.isLoading ? (
+            {this.state.isLoading ? (
               <div className='centerContent'>
                 <Loader content="Loading..." />
               </div>
             ) : (
-              
+              <Form>
+                <FormGroup>
+                  <Panel 
+                    className="listLatestQuotes2"
+                    header="Result" 
+                    shaded
+                    style={{ width: 500 }}
+                  >
+                    {this.state.response}
+                  </Panel>
+                </FormGroup>
+              </Form>
             )}
-        </div> */}
+          </div>
+        </div>
       </>
     );
   }
