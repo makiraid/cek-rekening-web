@@ -5,14 +5,21 @@ Cek nama pemilik nomor rekening
 
 ### DEMO
 <https://norek.makira.id/>
-![alt text](https://image.prntscr.com/image/v4unEJXySV2YCHgLncssxQ.png)
+![alt text](https://image.prntscr.com/image/BRcKP2GuTq_h01Y2kdEdmw.png)
 
-### Run in your local system
+### Hosted yourself
+#### local system
 ```
 git clone https://github.com/kirahxr/cek-rekening-web.git norek-web \
 cd norek-web \
 npm install \
 npm start
+```
+#### Docker Container
+```
+git clone https://github.com/kirahxr/cek-rekening-web.git norek-web \
+cd norek-web \
+docker-compose up -d
 ```
 *running on port: 3006
 
