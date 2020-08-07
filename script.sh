@@ -1,16 +1,16 @@
 #!/bin/bash
 
-ssh root@$SERVER "mkdir -p ~/quotes-web"
+ssh root@$SERVER "mkdir -p ~/norek-web"
 
 
-scp -r ./* root@$SERVER:~/quotes-web
+scp -r ./* root@$SERVER:~/norek-web
 
 ssh root@$SERVER '
 
 cd quotes-web
-docker build -t quotes-web .
-docker stop quotes-web
-docker rm quotes-web
-docker run -p 3010:80 -d --name quotes-web quotes-web:latest
+docker build -t norek-web .
+docker stop norek-web
+docker rm norek-web
+docker run -p 3006:80 -d --name norek-web norek-web:latest
 
 '
