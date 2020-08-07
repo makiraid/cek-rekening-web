@@ -7,7 +7,7 @@ scp -r ./* root@$SERVER:~/norek-web
 
 ssh root@$SERVER '
 
-cd quotes-web
+cd norek-web
 docker build -t norek-web .
 docker stop norek-web
 docker rm norek-web
